@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Loan Default Predictor & Explainable Credit Decision System</title>
+    
+    <!-- Google Fonts: Outfit & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ApexCharts for High-Fidelity Data Visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
+    <!-- Custom Glassmorphism Styles -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="brand-text">
+                    <h1>CrediTrust <span class="ai-badge">XAI</span></h1>
+                    <p>Loan Risk Assessment</p>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-item active" id="tab-overview" onclick="switchTab('overview')">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>System Overview</span>
+                </button>
+                <button class="nav-item" id="tab-predictor" onclick="switchTab('predictor')">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <span>Risk Predictor</span>
+                </button>
+                <button class="nav-item" id="tab-analytics" onclick="switchTab('analytics')">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Model Benchmarks</span>
+                </button>
+                <button class="nav-item" id="tab-database" onclick="switchTab('database')">
+                    <i class="fa-solid fa-database"></i>
+                    <span>Dataset Explorer</span>
+                </button>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <span class="status-indicator online"></span>
+                    <span class="status-text">ML Engine Active</span>
+                </div>
+                <div class="authors">
+                    <p>KDU Global AI Dept</p>
+                    <p class="names">S. Narvekar & K. Sevak</p>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Header bar -->
+            <header class="top-bar">
+                <div class="page-title">
+                    <h2 id="current-tab-title">System Overview</h2>
+                    <p id="current-tab-subtitle">Real-time risk scoring and analytical evaluation support</p>
+                </div>
+                <div class="top-bar-actions">
+                    <div class="model-selector-container">
+                        <label for="global-model-select"><i class="fa-solid fa-brain"></i> Active Model:</label>
+                        <select id="global-model-select" onchange="onModelChange()">
+                            <option value="Gradient Boosting (XGBoost)" selected>Gradient Boosting (XGBoost)</option>
+                            <option value="Random Forest">Random Forest</option>
+                            <option value="Logistic Regression">Logistic Regression</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-secondary btn-icon" onclick="triggerRetrain()" title="Re-train models on new data stream">
+                        <i class="fa-solid fa-arrows-rotate" id="retrain-icon"></i>
+                        <span>Re-train Stream</span>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Dynamic Tab Content Sections -->
+            <div class="content-body">
+                
+                <!-- SECTION 1: SYSTEM OVERVIEW -->
+                <section id="section-overview" class="tab-content active-content">
+                    <div class="overview-grid">
+                        
+                        <!-- Research Abstract Card -->
+                        <div class="card glass-card span-2-col">
+                            <div class="card-header">
+                                <h3><i class="fa-solid fa-file-invoice"></i> Executive Research Abstract</h3>
+                                <span class="card-subtitle">AI-Based Loan Default Risk Prediction & Explainable Credit Decision System</span>
+                            </div>
+                            <div class="card-body">
+                                <p class="abstract-text">
+                                    This state-of-the-art system implements advanced predictive modeling to address the asymmetric cost structure of lending operations. By integrating ensemble methods with game-theoretic <strong>Explainable AI (XAI)</strong> via <strong>SHAP values</strong>, we deliver robust, high-accuracy predictions accompanied by auditable, feature-level decision explanations.
+                                </p>
+                                <div class="abstract-tags">
+                                    <span><i class="fa-solid fa-circle-check"></i> Gradient Boosting</span>
+                                    <span><i class="fa-solid fa-circle-check"></i> SHAP Explainability</span>
+                                    <span><i class="fa-solid fa-circle-check"></i> Risk Tiers</span>
+                                    <span><i class="fa-solid fa-circle-check"></i> Credit Analytics</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- High Level KPI Stats -->
+                        <div class="card glass-card stat-card glowing-indigo">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">XGBoost ROC-AUC</span>
+                                <h3 class="stat-value">0.961</h3>
+                                <p class="stat-trend positive"><i class="fa-solid fa-arrow-trend-up"></i> Best Performing</p>
+                            </div>
+                        </div>
+                        
+                        <div class="card glass-card stat-card glowing-emerald">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-square-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <span class="stat-label">Model Accuracy</span>
+                                <h3 class="stat-value">92.4%</h3>
+                                <p class="stat-trend positive"><i class="fa-solid fa-check"></i> High Precision</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Main Model Comparison Performance Bar Chart -->
+                        <div class="card glass-card span-2-col">
+                            <div class="card-header">
+                                <h3><i class="fa-solid fa-chart-simple"></i> Model Performance Benchmarking</h3>
+                                <span class="card-subtitle">Comparison across core classification metrics (Logistic Regression, Random Forest, XGBoost)</span>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-model-comparison" class="chart-container"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Risk Tier Reference Table -->
+                        <div class="card glass-card">
+                            <div class="card-header">
+                                <h3><i class="fa-solid fa-triangle-exclamation"></i> Risk Classification Tiers</h3>
+                                <span class="card-subtitle">Numerical scoring thresholds mapping</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="tier-list">
+                                    <div class="tier-item tier-low">
+                                        <div class="tier-indicator"></div>
+                                        <div class="tier-details">
+                                            <h4>Low Risk Tier</h4>
+                                            <p>Score: 0 - 40</p>
+                                        </div>
+                                        <div class="tier-action approved">Approved</div>
+                                    </div>
+                                    <div class="tier-item tier-med">
+                                        <div class="tier-indicator"></div>
+                                        <div class="tier-details">
+                                            <h4>Medium Risk Tier</h4>
+                                            <p>Score: 41 - 70</p>
+                                        </div>
+                                        <div class="tier-action referred">Referred</div>
+                                    </div>
+                                    <div class="tier-item tier-high">
+                                        <div class="tier-indicator"></div>
+                                        <div class="tier-details">
+                                            <h4>High Risk Tier</h4>
+                                            <p>Score: 71 - 100</p>
+                                        </div>
+                                        <div class="tier-action declined">Declined</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+                <!-- SECTION 2: CREDIT RISK PREDICTOR -->
+                <section id="section-predictor" class="tab-content">
+                    <div class="predictor-grid">
+                        
+                        <!-- Predictor Inputs Form Card -->
+                        <div class="card glass-card span-2-col">
+                            <div class="card-header">
+                                <h3><i class="fa-solid fa-wallet"></i> Applicant Credit Parameters</h3>
+                                <span class="card-subtitle">Adjust slider values to evaluate dynamic credit decision thresholds</span>
+                            </div>
+                            <div class="card-body">
+                                <form id="prediction-form" onsubmit="submitPrediction(event)">
+                                    <div class="form-grid">
+                                        
+                                        <!-- Column 1 -->
+                                        <div class="form-group">
+                                            <label for="input-income">Annual Income ($)</label>
+                                            <input type="range" id="input-income" min="15000" max="250000" step="5000" value="65000" oninput="updateSliderLabel('income', '$' + Number(this.value).toLocaleString())">
+                                            <span class="slider-val" id="label-income">$65,000</span>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="input-loan-amount">Requested Loan Amount ($)</label>
+                                            <input type="range" id="input-loan-amount" min="2000" max="100000" step="2000" value="18000" oninput="updateSliderLabel('loan-amount', '$' + Number(this.value).toLocaleString())">
+                                            <span class="slider-val" id="label-loan-amount">$18,000</span>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="input-dti">Debt-to-Income (DTI) Ratio (%)</label>
+                                            <input type="range" id="input-dti" min="2" max="95" step="1" value="24" oninput="updateSliderLabel('dti', this.value + '%')">
+                                            <span class="slider-val" id="label-dti">24%</span>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="input-ltv">Loan-to-Value (LTV) Ratio (%)</label>
+                                            <input type="range" id="input-ltv" min="5" max="140" step="5" value="65" oninput="updateSliderLabel('ltv', this.value + '%')">
+                                            <span class="slider-val" id="label-ltv">65%</span>
+                                        </div>
+                                        
+                                        <!-- Column 2 -->
+                                        <div class="form-group">
+                                            <label for="input-credit-score">Credit Score (FICO)</label>
+                                            <input type="range" id="input-credit-score" min="300" max="850" step="10" value="680" oninput="updateSliderLabel('credit-score', this.value)">
+                                            <span class="slider-val" id="label-credit-score">680</span>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="input-utilization">Credit Utilization Rate (%)</label>
+                                            <input type="range" id="input-utilization" min="0" max="100" step="5" value="25" oninput="updateSliderLabel('utilization', this.value + '%')">
+                                            <span class="slider-val" id="label-utilization">25%</span>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="input-delinquencies">Historical Delinquencies (Count)</label>
+                                            <input type="range" id="input-delinquencies" min="0" max="10" step="1" value="0" oninput="updateSliderLabel('delinquencies', this.value)">
+                                            <span class="slider-val" id="label-delinquencies">0</span>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="input-repayment-score">Repayment Score (0-100)</label>
+                                            <input type="range" id="input-repayment-score" min="0" max="100" step="5" value="80" oninput="updateSliderLabel('repayment-score', this.value)">
+                                            <span class="slider-val" id="label-repayment-score">80</span>
+                                        </div>
+                                        
+                                        <!-- Categoricals and Employment -->
+                                        <div class="form-group">
+                                            <label for="input-employment-years">Employment Duration (Years)</label>
+                                            <input type="range" id="input-employment-years" min="0" max="40" step="0.5" value="6.5" oninput="updateSliderLabel('employment-years', this.value + ' Years')">
+                                            <span class="slider-val" id="label-employment-years">6.5 Years</span>
+                                        </div>
+                                        
+                                        <div class="form-group select-group">
+                                            <label for="input-employment-type">Employment Status</label>
+                                            <select id="input-employment-type">
+                                                <option value="Full-time" selected>Full-Time Contract</option>
+                                                <option value="Part-time">Part-Time</option>
+                                                <option value="Self-employed">Self-Employed / Freelancer</option>
+                                                <option value="Unemployed">Currently Unemployed</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group select-group span-2-col">
+                                            <label for="input-loan-purpose">Primary Loan Purpose</label>
+                                            <select id="input-loan-purpose">
+                                                <option value="Debt Consolidation" selected>Debt Consolidation (Refinance)</option>
+                                                <option value="Home Improvement">Home Improvement / Renovation</option>
+                                                <option value="Education">Educational Costs</option>
+                                                <option value="Major Purchase">Major Capital Purchase</option>
+                                                <option value="Business">Business Expansion / Startup</option>
+                                            </select>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset Parameters</button>
+                                        <button type="submit" class="btn btn-primary" id="btn-predict-submit">
+                                            <i class="fa-solid fa-wand-magic-sparkles"></i> Evaluate Applicant Risk
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Prediction Decision Output Panel -->
+                        <div class="card glass-card flex-center">
+                            <div class="card-header full-width">
+                                <h3><i class="fa-solid fa-circle-question"></i> Credit Decision Report</h3>
+                            </div>
+                            
+                            <div class="predictor-output-placeholder" id="output-placeholder">
+                                <i class="fa-solid fa-chart-pie placeholder-icon"></i>
+                                <h4>Awaiting Evaluation</h4>
+                                <p>Adjust applicant details and press "Evaluate" to generate real-time predictive risk results.</p>
+                            </div>
+                            
+                            <div class="predictor-output-results hide" id="output-results">
+                                <!-- Animated risk gauge container -->
+                                <div class="gauge-wrapper">
+                                    <div id="risk-radial-gauge"></div>
+                                    <div class="gauge-overlay">
+                                        <span class="gauge-label">Risk Score</span>
+                                        <span class="gauge-value" id="res-risk-score">28</span>
+                                        <span class="gauge-tier" id="res-risk-tier">LOW RISK</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="decision-alert-box" id="res-decision-box">
+                                    <i class="fa-solid fa-circle-check" id="res-decision-icon"></i>
+                                    <div class="decision-text">
+                                        <h4 id="res-decision">Approved</h4>
+                                        <p id="res-decision-desc">Risk score falls within safe credit operating threshold.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Explainable AI (SHAP) Visual Force Plot -->
+                        <div class="card glass-card span-3-col hide" id="card-shap-explanation">
+                            <div class="card-header">
+                                <h3><i class="fa-solid fa-eye"></i> Explainable AI (XAI) - Local Feature SHAP Values</h3>
+                                <span class="card-subtitle">Quantified impact of individual credit features on default risk score (Game-theoretic Shapley contributions)</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="shap-legend">
+                                    <span class="legend-item"><span class="legend-dot bg-red"></span> Increases Default Risk</span>
+                                    <span class="legend-item"><span class="legend-dot bg-green"></span> Decreases Default Risk</span>
+                                </div>
+                                <div id="chart-shap-force" class="chart-container"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Custom Credit Recommendation Rules -->
+                        <div class="card glass-card span-3-col hide" id="card-credit-recommendations">
+                            <div class="card-header">
+                                <h3><i class="fa-solid fa-lightbulb"></i> Dynamic Credit Underwriting Insights</h3>
+                                <span class="card-subtitle">Actionable feedback for loan officers and risk analysts based on prediction context</span>
+                            </div>
+                            <div class="card-body">
+                                <ul class="recommendation-list" id="res-recommendation-list">
+                                    <!-- Populated dynamically -->
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+                <!-- SECTION 3: MODEL ANALYTICS & DEEP DIVE -->
+                <section id="section-analytics" class="tab-content">
+                    <div class="analytics-grid">
+                        
+                        <!-- Metrics detail cards -->
+                        <div class="card glass-card span-2-col">
+                            <div class="card-header">
+                                <h3><i class="fa-solid fa-list-check"></i> Benchmark Metrics Details</h3>
+                                <span class="card-subtitle">Comprehensive metrics extracted from cross-validation splits</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="premium-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Classifier Model</th>
+                                                <th>Accuracy</th>
+                                                <th>Precision</th>
+                                                <th>Recall</th>
+                                                <th>F1-Score</th>
+                                                <th>ROC-AUC</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="metrics-table-body">
+                                            <!-- Dynamically loaded -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Feature Importance -->
+                        <div class="card glass-card">
+                            <div class="card-header">
+                                <h3><i class="fa-solid fa-arrow-down-up-lock"></i> Global Feature Importance</h3>
+                                <span class="card-subtitle">Primary default drivers overall</span>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-feature-importance" class="chart-container"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- ROC Curve visualization -->
+                        <div class="card glass-card span-2-col">
+                            <div class="card-header">
+                                <h3><i class="fa-solid fa-arrow-trend-up"></i> ROC curves (Receiver Operating Characteristic)</h3>
+                                <span class="card-subtitle">Sensitivity vs Specificity tradeoff across full threshold range</span>
+                            </div>
+                            <div class="card-body">
+                                <div id="chart-roc-curve" class="chart-container"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Confusion Matrix -->
+                        <div class="card glass-card">
+                            <div class="card-header">
+                                <h3><i class="fa-solid fa-border-all"></i> Confusion Matrix (XGBoost)</h3>
+                                <span class="card-subtitle">True values vs predicted default splits</span>
+                            </div>
+                            <div class="card-body flex-center-col">
+                                <div class="confusion-matrix-grid">
+                                    <div class="cm-cell empty"></div>
+                                    <div class="cm-cell header">Predicted Paid</div>
+                                    <div class="cm-cell header">Predicted Default</div>
+                                    
+                                    <div class="cm-cell header row-header">True Paid</div>
+                                    <div class="cm-cell value tp" id="cm-tp">0</div>
+                                    <div class="cm-cell value fn" id="cm-fn">0</div>
+                                    
+                                    <div class="cm-cell header row-header">True Default</div>
+                                    <div class="cm-cell value fp" id="cm-fp">0</div>
+                                    <div class="cm-cell value tn" id="cm-tn">0</div>
+                                </div>
+                                <div class="cm-insights">
+                                    <p><i class="fa-solid fa-circle-info"></i> False Negatives (FN) represent high-risk applicants predicted as safe, which carries a critical business cost.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+                <!-- SECTION 4: DATASET EXPLORER -->
+                <section id="section-database" class="tab-content">
+                    <div class="database-layout">
+                        
+                        <!-- Filter Bar -->
+                        <div class="card glass-card table-controls">
+                            <div class="search-input-wrapper">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="table-search" placeholder="Search by Employment Status, Purpose, or Status..." oninput="onTableSearch()">
+                            </div>
+                            <div class="table-meta-text">
+                                <span id="table-total-records">Showing 0 of 0 records</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Database Table -->
+                        <div class="card glass-card">
+                            <div class="table-responsive">
+                                <table class="premium-table font-inter">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Annual Income</th>
+                                            <th>Loan Amount</th>
+                                            <th>FICO</th>
+                                            <th>DTI</th>
+                                            <th>LTV</th>
+                                            <th>Util. %</th>
+                                            <th>Delinq.</th>
+                                            <th>Emp. Status</th>
+                                            <th>Loan Purpose</th>
+                                            <th>Repayment Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="database-table-body">
+                                        <!-- Dynamically loaded -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Table Pagination -->
+                            <div class="table-pagination">
+                                <button class="btn btn-secondary btn-sm" id="btn-prev-page" onclick="prevPage()" disabled>
+                                    <i class="fa-solid fa-chevron-left"></i> Previous
+                                </button>
+                                <span class="pagination-info" id="pagination-info">Page 1 of 1</span>
+                                <button class="btn btn-secondary btn-sm" id="btn-next-page" onclick="nextPage()">
+                                    Next <i class="fa-solid fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+            </div>
+            
+        </main>
+        
+    </div>
+    
+    <!-- Notification Overlay -->
+    <div class="notification-container" id="notification-area"></div>
+    
+    <!-- Core Application Logic Script -->
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
